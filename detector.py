@@ -101,7 +101,6 @@ if __name__=='__main__':
                 pass
             vid_writer.write(info['visual'])
 
-            print(frame_count, end="\r")
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
                 break
