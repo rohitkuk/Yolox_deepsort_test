@@ -90,8 +90,8 @@ def draw_boxes(img, bbox, object_id, identities=None, offset=(0, 0)):
     # Clear mappings already in the deque , Check for without this
     [data_deque.pop(key) for key in set(data_deque) if key not in identities]
     for i, box in enumerate(bbox):
-        if class_names[object_id[i]] not in set(filter_classes):
-            continue
+        # if class_names[object_id[i]] not in set(filter_classes):
+        #     continue
         x1, y1, x2, y2 = [int(i) +offset[0]  for i in box]  
         box_height = (y2-y1)
         center = (int((x2+x1)/ 2), int((y2+y2)/2))
