@@ -11,9 +11,6 @@ from yolox.data.datasets import COCO_CLASSES
 from yolox.utils import postprocess, vis
 # from yolox.utils.visualize import vis_track
 
-def time_synchronized():
-    torch.cuda.synchronize() if torch.cuda.is_available() else None
-    return time.time()
 
 class_names = COCO_CLASSES
 
@@ -52,7 +49,6 @@ class Predictor():
         
         if self.device == torch.device('cuda'):
             img = img.cuda()
-            # img = img.half()  # to FP16
 
         with torch.no_grad():
             t0 = time.time()
@@ -93,7 +89,6 @@ if __name__=='__main__':
     
     while True:
         ret_val, frame = cap.read() # read frame from video
-        t1 = time_synchronized()
         if ret_val:
             try:
                 _,info = detector.inference(frame, visual=True)
@@ -104,7 +99,6 @@ if __name__=='__main__':
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
                 break
-            fps  = ( fps + (1./(time_synchronized()-t1)) ) / 2
         else:
             break
 
