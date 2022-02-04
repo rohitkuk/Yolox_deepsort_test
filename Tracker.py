@@ -104,9 +104,41 @@ def draw_boxes(img, bbox, object_id, identities=None, offset=(0, 0)):
         obj_name = class_names[object_id[i]]
         label = '%s' % (obj_name)
         data_deque[id].appendleft(center) #appending left to speed up the check we will check the latest map
-        UI_box(box, img, label=label + str(id), color=color, line_thickness=3, boundingbox=True)
+        UI_box(box, img, label=label, color=color, line_thickness=3, boundingbox=True)
     return img
 
+def vis_track(img, boxes):
+    for key in list(pts):
+      if key not in boxes[:, -2]:
+        pts.pop(key)
+    
+    for i in range(len(boxes)):
+        box = boxes[i]
+        x0 = int(box[0])
+        y0 = int(box[1])
+        x1 = int(box[2])
+        y1 = int(box[3])
+
+        id = box[4]
+        if id not in pts:
+          pts[id] = deque(maxlen= 64)
+        clsid = 1
+        color = compute_color_for_labels(clsid)
+        text = '%d'%(id)
+        txt_color = (255, 255, 255)
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        #bbox_center_point(x,y)
+        center = (int(((box[0])+(box[2]))/2),int(((box[1])+(box[3]))/2))
+        # print(center)
+        pts[id].append(center)
+        thickness = 5
+        cv2.circle(img,  (center), 1, color, thickness)
+        for j in range(1, len(pts[id])):
+            if pts[id][j - 1] is None or pts[id][j] is None:
+                continue
+            thickness = int(np.sqrt(64 / float(j + 1)) * 2)
+            cv2.line(img,(pts[id][j-1]), (pts[id][j]),(color),5)
+    return img
 
 class Tracker():
     def __init__(self, filter_class=None, model='yolox-s', ckpt='wieghts/yolox_s.pth'):
@@ -144,6 +176,7 @@ class Tracker():
                         identities =outputs[:, -2]
                         object_id =outputs[:, -1]
                         image = draw_boxes(image, bbox_xyxy, object_id,identities)
+                        image = vis_track(image, bbox_xyxy)
             return image, outputs
 
 
