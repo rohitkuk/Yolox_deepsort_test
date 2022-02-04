@@ -143,8 +143,8 @@ class Tracker():
                         bbox_xyxy =outputs[:, :4]
                         identities =outputs[:, -2]
                         object_id =outputs[:, -1]
-                        image, data = draw_boxes(image, bbox_xyxy, object_id,identities)
-            return image, outputs , data
+                        image = draw_boxes(image, bbox_xyxy, object_id,identities)
+            return image, outputs
 
 
 if __name__=='__main__':
@@ -168,7 +168,7 @@ if __name__=='__main__':
         ret_val, frame = cap.read() # read frame from video
         t1 = time_synchronized()
         if ret_val:
-            frame, bbox, data_dict = tracker.update(frame, visual=True, logger_=False)  # feed one frame and get result
+            frame, bbox = tracker.update(frame, visual=True, logger_=False)  # feed one frame and get result
             vid_writer.write(frame)
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
