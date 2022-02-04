@@ -18,6 +18,9 @@ from collections import Counter
 data_deque = {}
 names = COCO_CLASSES
 
+def time_synchronized():
+    torch.cuda.synchronize() if torch.cuda.is_available() else None
+    return time.time()
 
 palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
 def compute_color_for_labels(label):
