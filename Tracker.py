@@ -166,6 +166,7 @@ if __name__=='__main__':
     fps = 0.0
     while True:
         ret_val, frame = cap.read() # read frame from video
+        t1 = time_synchronized()
         if ret_val:
             frame, bbox, data_dict = tracker.update(frame, visual=True, logger_=False)  # feed one frame and get result
             vid_writer.write(frame)
