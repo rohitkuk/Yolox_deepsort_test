@@ -16,7 +16,7 @@ from collections import Counter
 
 
 data_deque = {}
-names = COCO_CLASSES
+class_names = COCO_CLASSES
 
 def time_synchronized():
     torch.cuda.synchronize() if torch.cuda.is_available() else None
