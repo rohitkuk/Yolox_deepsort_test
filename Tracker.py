@@ -16,6 +16,8 @@ from collections import Counter
 
 
 data_deque = {}
+pts = {}
+
 class_names = COCO_CLASSES
 
 def time_synchronized():
