@@ -147,7 +147,7 @@ class Tracker():
 if __name__=='__main__':
     
         
-    tracker = Tracker(filter_class=None, model='yolox-x', ckpt='weights/yolox_x.pth', LineMapping=LineMapping)    # instantiate Tracker
+    tracker = Tracker(filter_class=None, model='yolox-x', ckpt='weights/yolox_x.pth')    # instantiate Tracker
 
     cap = cv2.VideoCapture(sys.argv[1]) 
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
