@@ -104,7 +104,7 @@ def draw_boxes(img, bbox, object_id, identities=None, offset=(0, 0)):
         obj_name = class_names[object_id[i]]
         label = '%s' % (obj_name)
         data_deque[id].appendleft(center) #appending left to speed up the check we will check the latest map
-        UI_box(box, img, label=label, color=(0,255,0), line_thickness=3, boundingbox=True)
+        UI_box(box, img, label=label + str(id), color=color, line_thickness=3, boundingbox=True)
     return img
 
 
@@ -121,7 +121,7 @@ class Tracker():
         self.filter_class = COCO_CLASSES
     def update(self, image, visual = True, logger_=True):
         height, width, _ = image.shape 
-        _,info = self.detector.inference(image, visual=True, logger_=logger_)
+        _,info = self.detector.inference(image, visual=False, logger_=logger_)
         outputs = []
         
         if info['box_nums']>0:
