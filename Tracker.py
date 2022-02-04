@@ -178,7 +178,7 @@ class Tracker():
                         identities =outputs[:, -2]
                         object_id =outputs[:, -1]
                         image = draw_boxes(image, bbox_xyxy, object_id,identities)
-                        image = vis_track(image, bbox_xyxy)
+                        image = vis_track(image, outputs)
             return image, outputs
 
 
